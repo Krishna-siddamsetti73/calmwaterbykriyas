@@ -15,7 +15,7 @@ export function Home() {
     <>
       <Hero />
       <PhilosophyStrip />
-      <SplitSection />
+      {/* <SplitSection /> */}
       <EmotionsGalaxy />
       <ServiceLayers />
       <MindscapeCanvas />
