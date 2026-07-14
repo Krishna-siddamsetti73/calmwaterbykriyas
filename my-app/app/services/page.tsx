@@ -94,7 +94,7 @@ type Service = {
 const services: Service[] = [
   {
     title: "Depression Counselling",
-    desc: "Understand emotional lows, regain clarity, and rebuild motivation.",
+    desc: "Depression doesn't define who you are. With the right guidance, you can regain emotional balance and move forward with confidence.Depression doesn't define who you are. With the right guidance, you can regain emotional balance and move forward with confidence.",
     slug: "depression",
     cat: "mental",
     img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&auto=format&fit=crop&q=80",
@@ -122,7 +122,7 @@ const services: Service[] = [
   },
   {
     title: "Sleep & Insomnia Support",
-    desc: "Improve sleep patterns and manage restlessness.",
+    desc: "Improve sleep patterns and manage restlessness we help you rebuild your sleep cycle.",
     slug: "sleep",
     cat: "mental",
     img: "https://images.unsplash.com/photo-1455642305367-68834a9d4337?w=600&auto=format&fit=crop&q=80",
@@ -358,20 +358,20 @@ const services: Service[] = [
     cat: "care",
     img: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&auto=format&fit=crop&q=80",
   },
-  {
-    title: "Psychometric Testing",
-    desc: "Scientific insight into abilities, personality, and behavior.",
-    slug: "psychometric-testing",
-    cat: "care",
-    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=80",
-  },
-  {
-    title: "Learning Disability Support",
-    desc: "Support for dyslexia, dysgraphia, dyscalculia, and more.",
-    slug: "learning-disability",
-    cat: "care",
-    img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
-  },
+  // {
+  //   title: "Psychometric Testing",
+  //   desc: "Scientific insight into abilities, personality, and behavior.",
+  //   slug: "psychometric-testing",
+  //   cat: "care",
+  //   img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=80",
+  // },
+  // {
+  //   title: "Learning Disability Support",
+  //   desc: "Support for dyslexia, dysgraphia, dyscalculia, and more.",
+  //   slug: "learning-disability",
+  //   cat: "care",
+  //   img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
+  // },
   {
     title: "Abandonment Counselling",
     desc: "Heal from feelings of rejection and rebuild trust.",

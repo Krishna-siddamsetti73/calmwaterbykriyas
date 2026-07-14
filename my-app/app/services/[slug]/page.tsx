@@ -246,7 +246,7 @@ const data: Record<string, ServiceData> = {
       "Reducing nighttime restlessness",
       "A more sustainable, balanced lifestyle",
     ],
-    outcome: "More restful sleep and steadier, more energised days.",
+    outcome: "Sleep better, feel more energized, and enjoy steadier days.",
     outcomeImg:
       "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1600&auto=format&fit=crop&q=80",
   },
@@ -443,7 +443,7 @@ const data: Record<string, ServiceData> = {
       "Reducing stress caused by overload",
       "Building realistic, sustainable routines",
     ],
-    outcome: "Improved productivity and a more balanced daily life.",
+    outcome: "Gain control over your schedule and make the most of every day.",
     outcomeImg:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&auto=format&fit=crop&q=80",
   },
@@ -552,7 +552,7 @@ const data: Record<string, ServiceData> = {
     heroImg:
       "https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1600&auto=format&fit=crop&q=80",
     intro:
-      "Academic struggles are often about more than grades. We help students build confidence in how they learn.",
+      "Academic struggles are not just about grades they often reflect deeper challenges.",
     feel: [
       "Difficulty focusing or retaining information",
       "Academic pressure and self-doubt",
@@ -626,7 +626,7 @@ const data: Record<string, ServiceData> = {
     heroImg:
       "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&auto=format&fit=crop&q=80",
     intro:
-      "Grief is not a straight path. Whatever you're carrying, you don't have to carry it alone.",
+      "how we help change to A judgment-free space for personal exploration",
     feel: [
       "Denial — 'this doesn't feel real'",
       "Anger or bargaining",
@@ -687,7 +687,7 @@ const data: Record<string, ServiceData> = {
       "Long-term recovery strategies",
       "Support for families when needed",
     ],
-    outcome: "Regained control and a healthier, freer path forward.",
+    outcome: "Regained control and a healthier,  path forward.",
     outcomeImg:
       "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1600&auto=format&fit=crop&q=80",
   },
@@ -738,7 +738,8 @@ const data: Record<string, ServiceData> = {
       "Building confidence in high-anxiety moments",
       "Reducing anticipatory anxiety over time",
     ],
-    outcome: "Reduced anxiety, greater ease, and restored daily confidence.",
+    outcome:
+      "Supporting greater calm, increased ease, and lasting daily confidence.",
     outcomeImg:
       "https://images.unsplash.com/photo-1474418397713-7ede21d49118?w=1600&auto=format&fit=crop&q=80",
   },
@@ -762,7 +763,7 @@ const data: Record<string, ServiceData> = {
       "Coping skills for emotional fluctuations",
       "Collaborative, compassionate long-term support",
     ],
-    outcome: "Consistency, control, and a more balanced everyday life.",
+    outcome: " Consistency, confidence, and better balance in everyday life.",
     outcomeImg:
       "https://images.unsplash.com/photo-1455642305367-68834a9d4337?w=1600&auto=format&fit=crop&q=80",
   },
@@ -858,7 +859,8 @@ const data: Record<string, ServiceData> = {
       "Healthy coping and resilience strategies",
       "Restoring a sense of control and safety",
     ],
-    outcome: "Confidence, resilience, and a renewed sense of well-being.",
+    outcome:
+      " Healing from bullying, rebuilding confidence, and finding your voice.",
     outcomeImg:
       "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=1600&auto=format&fit=crop&q=80",
   },
@@ -882,7 +884,8 @@ const data: Record<string, ServiceData> = {
       "Grounding and calming tools",
       "Building confidence in feared situations",
     ],
-    outcome: "Increased confidence and improved daily functioning.",
+    outcome:
+      "Regain confidence and take meaningful steps toward the life you want.",
     outcomeImg:
       "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1600&auto=format&fit=crop&q=80",
   },
@@ -908,7 +911,7 @@ const data: Record<string, ServiceData> = {
       "Practical coping skills for daily life",
       "A consistent space to grow at your pace",
     ],
-    outcome: "Greater self-understanding, inner balance, and well-being.",
+    outcome: "Helping couples thrive through understanding and support.",
     outcomeImg:
       "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600&auto=format&fit=crop&q=80",
   },
@@ -981,42 +984,41 @@ const data: Record<string, ServiceData> = {
       "Addressing emotional blocks to intimacy",
       "Building confidence and healthy sexual expression",
     ],
-    outcome: "More fulfilling relationships and overall emotional well-being.",
+    outcome: "Nurturing intimacy with compassion and care.",
     outcomeImg:
       "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=1600&auto=format&fit=crop&q=80",
   },
-  ptsd: {
-    title: "PTSD Counselling",
-    group: "Specialised Care",
-    ...base.care,
-    heroImg:
-      "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1600&auto=format&fit=crop&q=80",
-    intro:
-      "PTSD can make the past feel present. We provide structured, compassionate support for lasting recovery.",
-    feel: [
-      "Flashbacks or intrusive memories",
-      "Emotional numbness or hypervigilance",
-      "Difficulty with trust and relationships",
-      "Avoiding places, people, or thoughts",
-    ],
-    help: [
-      "Trauma-informed, evidence-based care",
-      "Processing painful memories safely",
-      "Coping skills and emotional stabilisation",
-      "Patient, paced support at your speed",
-    ],
-    outcome: "Recovery, resilience, and a renewed quality of life.",
-    outcomeImg:
-      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&auto=format&fit=crop&q=80",
-  },
+  // ptsd: {
+  //   title: "PTSD Counselling",
+  //   group: "Specialised Care",
+  //   ...base.care,
+  //   heroImg:
+  //     "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1600&auto=format&fit=crop&q=80",
+  //   intro:
+  //     "PTSD can make the past feel present. We provide structured, compassionate support for lasting recovery.",
+  //   feel: [
+  //     "Flashbacks or intrusive memories",
+  //     "Emotional numbness or hypervigilance",
+  //     "Difficulty with trust and relationships",
+  //     "Avoiding places, people, or thoughts",
+  //   ],
+  //   help: [
+  //     "Trauma-informed, evidence-based care",
+  //     "Processing painful memories safely",
+  //     "Coping skills and emotional stabilisation",
+  //     "Patient, paced support at your speed",
+  //   ],
+  //   outcome: "Recovery, resilience, and a renewed quality of life.",
+  //   outcomeImg:
+  //     "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&auto=format&fit=crop&q=80",
+  // },
   "suicidal-intervention": {
     title: "Suicidal Intervention Counselling",
     group: "Specialised Care",
     ...base.care,
     heroImg:
       "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&auto=format&fit=crop&q=80",
-    intro:
-      "Immediate, judgment-free emotional support during crisis. You are not alone — and this moment can pass.",
+    intro: "Every life matters. Every conversation counts..",
     feel: [
       "Feeling hopeless or trapped",
       "Emotional pain that feels unbearable",
@@ -1126,7 +1128,7 @@ const data: Record<string, ServiceData> = {
       "Developing healthier relationship patterns",
       "Creating a stronger sense of inner stability",
     ],
-    outcome: "Trust, confidence, and healthier emotional connections.",
+    outcome: " Healing attachment wounds with compassionate care.",
     outcomeImg:
       "https://images.unsplash.com/photo-1511895307984-ee87c1cf0bc6?w=1600&auto=format&fit=crop&q=80",
   },
@@ -1150,7 +1152,7 @@ const data: Record<string, ServiceData> = {
       "Building a balanced relationship with food",
       "Emotional support throughout recovery",
     ],
-    outcome: "Improved well-being, self-acceptance, and emotional health.",
+    outcome: " Encouraging balanced nutrition and self-care.",
     outcomeImg:
       "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600&auto=format&fit=crop&q=80",
   },
@@ -1222,7 +1224,7 @@ const data: Record<string, ServiceData> = {
       "Building confidence through transition",
       "Practical strategies for a balanced lifestyle",
     ],
-    outcome: "Greater balance, confidence, and well-being.",
+    outcome: "Managing menopause symptoms with confidence and care.",
     outcomeImg:
       "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1600&auto=format&fit=crop&q=80",
   },

@@ -13,18 +13,19 @@ import nsn from "@/app/assets/brain-removebg-preview.png";
 export function Home() {
   return (
     <>
-      <Hero />
-      <PhilosophyStrip />
-      {/* <SplitSection /> */}
-      <EmotionsGalaxy />
-      <ServiceLayers />
+      <Hero />1
+      <PhilosophyStrip />2{/* <SplitSection /> */}3
+      <EmotionsGalaxy />4{/* <ServiceLayers /> */}5
       <MindscapeCanvas />
-      <Testimonial />
-      <BreathStats />
+      <Testimonial />7
+      <BreathStats /> 8
       <ProcessRibbon />
       <EditorialShowcase />
+      10
       <SupportSignals />
+      11
       <ClosingCTA />
+      12
     </>
   );
 }
@@ -73,12 +74,12 @@ export function Hero() {
           </p>
         </div>
         <h1
-          className="opacity-0 animate-fade-blur font-display text-6xl md:text-8xl tracking-tight text-balance"
+          className="opacity-0 animate-fade-blur font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-balance leading-tight"
           style={{ animationDelay: "1.2s" }}
         >
-          Take a breath.
-          <span className="block mt-2 text-foreground/70">
-            You're safe here.
+          HEALING STARTS WITH ONE CONVERSATION.
+          <span className="block mt-3 text-2xl md:text-3xl lg:text-4xl text-foreground/70 leading-snug">
+            Your emotions deserve attention, not silence.
           </span>
         </h1>
         <p
@@ -242,15 +243,29 @@ const emotions: Emotion[] = [
 // ─── Ambient Particles ─────────────────────────────────────────────────────────
 
 function AmbientParticles() {
-  const particles = Array.from({ length: 28 }, (_, i) => ({
-    id: i,
-    angle: (i / 28) * 360,
-    radius: 90 + Math.sin(i * 1.3) * 45,
-    size: 1.5 + Math.random() * 2,
-    duration: 18 + i * 0.7,
-    delay: i * 0.22,
-    opacity: 0.15 + Math.random() * 0.35,
-  }));
+  // deterministic pseudo-random function based on index so SSR and client match
+  const seedRand = (n: number) => {
+    // simple hash/PRNG (deterministic across environments)
+    const x = Math.sin(n * 12.9898) * 43758.5453123;
+    return x - Math.floor(x);
+  };
+
+  const particles = Array.from({ length: 28 }, (_, i) => {
+    const r1 = seedRand(i + 1);
+    const r2 = seedRand(i + 31);
+    const r3 = seedRand(i + 97);
+    return {
+      id: i,
+      angle: (i / 28) * 360,
+      radius: 90 + Math.sin(i * 1.3) * 45,
+      size: 1.5 + r1 * 2,
+      duration: 18 + i * 0.7,
+      delay: i * 0.22,
+      opacity: 0.15 + r2 * 0.35,
+      scaleDuration: 3 + r3 * 2,
+      opacityDuration: 2.5 + seedRand(i + 17) * 2,
+    };
+  });
 
   return (
     <div
@@ -285,13 +300,13 @@ function AmbientParticles() {
                 ease: "linear",
               },
               scale: {
-                duration: 3 + Math.random() * 2,
+                duration: p.scaleDuration,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: p.delay,
               },
               opacity: {
-                duration: 2.5 + Math.random() * 2,
+                duration: p.opacityDuration,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: p.delay,
@@ -309,12 +324,10 @@ function AmbientParticles() {
 function BrainCenter({ expanded }: { expanded: boolean }) {
   return (
     <motion.div
-      className="relative flex items-center justify-center"
-      animate={{ scale: expanded ? 0.85 : 1 }}
+      className="relative flex aspect-square w-[min(72vw,260px)] items-center justify-center sm:w-[260px]"
+      animate={{ scale: expanded ? 0.9 : 1 }}
       transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      style={{ width: 260, height: 260 }}
     >
-      {/* Orbit rings */}
       {[1, 0.6, 0.35].map((opacity, i) => (
         <motion.div
           key={i}
@@ -333,10 +346,8 @@ function BrainCenter({ expanded }: { expanded: boolean }) {
         />
       ))}
 
-      {/* Ambient particles */}
       <AmbientParticles />
 
-      {/* Glow layers */}
       <div
         aria-hidden
         className="absolute rounded-full"
@@ -362,16 +373,14 @@ function BrainCenter({ expanded }: { expanded: boolean }) {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Brain image — replace src with your actual import */}
       <motion.div
         className="relative z-10"
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        style={{ width: 400, height: 400, marginTop: 200 }}
+        style={{ width: 320, height: 320, marginTop: 150 }}
       >
-        {/* Replace this placeholder with: <Image src={brain} alt="A glowing translucent brain" width={200} height={200} className="object-contain" /> */}
         <div
-          className="w-full h-full rounded-full flex items-center justify-center text-7xl"
+          className="flex h-full w-full items-center justify-center rounded-full text-7xl"
           style={{
             background:
               "radial-gradient(circle at 35% 30%, rgba(168,216,234,0.3), rgba(160, 197, 207, 0) 60%, transparent)",
@@ -381,9 +390,9 @@ function BrainCenter({ expanded }: { expanded: boolean }) {
           <Image
             src={nsn}
             alt="A glowing translucent brain"
-            width={600}
-            height={600}
-            className="object-contain"
+            width={420}
+            height={420}
+            className="h-auto w-full object-contain"
           />
         </div>
       </motion.div>
@@ -397,9 +406,8 @@ interface CardProps {
   emotion: Emotion;
   index: number;
   total: number;
-  rotationAngle: number; // current carousel rotation offset in degrees
+  rotationAngle: number;
   isSelected: boolean;
-  isPaused: boolean;
   onClick: () => void;
 }
 
@@ -411,22 +419,31 @@ function EmotionCard({
   isSelected,
   onClick,
 }: CardProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateViewport = () => setIsMobile(window.innerWidth < 768);
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
   const cardAngleDeg = (index / total) * 360 + rotationAngle;
   const cardAngleRad = (cardAngleDeg * Math.PI) / 180;
 
-  const ORBIT_RADIUS_X = 310;
-  const ORBIT_RADIUS_Z = 120;
+  const orbitRadiusX = isMobile ? 150 : 220;
+  const orbitRadiusZ = isMobile ? 78 : 120;
+  const cardWidth = isMobile ? 118 : 160;
+  const cardHeight = isMobile ? 128 : 170;
 
-  const x = Math.sin(cardAngleRad) * ORBIT_RADIUS_X;
-  const z = Math.cos(cardAngleRad) * ORBIT_RADIUS_Z;
-
-  // Depth calculations
-  const normalizedZ = (z + ORBIT_RADIUS_Z) / (ORBIT_RADIUS_Z * 2); // 0..1
-  const scale = isSelected ? 1.18 : 0.72 + normalizedZ * 0.28;
+  const x = Math.sin(cardAngleRad) * orbitRadiusX;
+  const z = Math.cos(cardAngleRad) * orbitRadiusZ;
+  const normalizedZ = (z + orbitRadiusZ) / (orbitRadiusZ * 2);
+  const scale = isSelected ? 1.16 : 0.72 + normalizedZ * 0.28;
   const opacity = isSelected ? 1 : 0.45 + normalizedZ * 0.55;
   const blur = isSelected ? 0 : Math.max(0, (1 - normalizedZ) * 4);
   const zIndex = isSelected ? 50 : Math.round(normalizedZ * 40);
-  const tiltY = isSelected ? 0 : -x * 0.04; // slight tilt toward center
+  const tiltY = isSelected ? 0 : -x * 0.04;
 
   return (
     <motion.button
@@ -435,10 +452,10 @@ function EmotionCard({
       style={{
         left: "50%",
         top: "50%",
-        width: 160,
-        height: 170,
-        marginLeft: -80,
-        marginTop: -123,
+        width: cardWidth,
+        height: cardHeight,
+        marginLeft: -cardWidth / 2,
+        marginTop: -(cardHeight / 2 + (isMobile ? 18 : 30)),
         zIndex,
         transformStyle: "preserve-3d",
       }}
@@ -449,25 +466,20 @@ function EmotionCard({
         opacity,
         filter: `blur(${blur}px)`,
         rotateY: tiltY,
-        y: isSelected ? -20 : 0,
+        y: isSelected ? -16 : 0,
       }}
-      transition={{
-        duration: 0.9,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       whileHover={
-        !isSelected ? { scale: scale * 1.08, filter: "blur(0px)" } : {}
+        !isSelected ? { scale: scale * 1.06, filter: "blur(0px)" } : {}
       }
       aria-label={`Explore ${emotion.name}`}
       aria-pressed={isSelected}
     >
-      {/* Card glass body */}
       <div
-        className={`relative w-full h-full rounded-[24px] overflow-hidden flex flex-col items-center justify-center gap-2 p-5 bg-gradient-to-br ${emotion.color} border border-white/10`}
+        className={`relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-[24px] border border-white/10 p-4 text-center sm:p-5 ${emotion.color}`}
         style={{
-          background: `
-            linear-gradient(135deg, rgba(255, 255, 255, 0.23) 0%, rgba(255,255,255,0.03) 100%)
-          `,
+          background:
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.23) 0%, rgba(255,255,255,0.03) 100%)",
           backdropFilter: "blur(24px) saturate(1.4)",
           WebkitBackdropFilter: "blur(24px) saturate(1.4)",
           boxShadow: isSelected
@@ -475,20 +487,18 @@ function EmotionCard({
             : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.08)",
         }}
       >
-        {/* Reflection highlight */}
         <div
           aria-hidden
-          className="absolute top-0 left-0 right-0 h-1/2 rounded-t-[24px] pointer-events-none"
+          className="pointer-events-none absolute left-0 right-0 top-0 h-1/2 rounded-t-[24px]"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.11) 0%, transparent 100%)",
           }}
         />
 
-        {/* Selected ring */}
         {isSelected && (
           <motion.div
-            className="absolute inset-0 rounded-[24px] pointer-events-none"
+            className="pointer-events-none absolute inset-0 rounded-[24px]"
             style={{ boxShadow: "inset 0 0 0 1.5px rgba(127,184,200,0.6)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -496,22 +506,19 @@ function EmotionCard({
           />
         )}
 
-        {/* Icon */}
         <motion.span
-          className="text-4xl leading-none"
-          animate={{ scale: isSelected ? 1.2 : 1 }}
+          className="text-3xl leading-none sm:text-4xl"
+          animate={{ scale: isSelected ? 1.15 : 1 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           {emotion.icon}
         </motion.span>
 
-        {/* Name */}
-        <p className="text-white/90 font-semibold text-[15px] tracking-tight leading-none">
+        <p className="text-[14px] font-semibold leading-none text-white/90 sm:text-[15px]">
           {emotion.name}
         </p>
 
-        {/* Subtitle */}
-        <p className="text-white/40 text-[11px] tracking-wide font-medium uppercase">
+        <p className="text-[10px] font-medium uppercase tracking-wide text-white/40 sm:text-[11px]">
           {emotion.subtitle}
         </p>
       </div>
@@ -524,21 +531,30 @@ function EmotionCard({
 function DetailPanel({
   emotion,
   onClose,
+  compact = false,
 }: {
   emotion: Emotion;
   onClose: () => void;
+  compact?: boolean;
 }) {
   return (
     <motion.div
-      className="relative flex flex-col justify-center h-full px-10 py-12 overflow-y-auto"
-      initial={{ opacity: 0, x: 60 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 40 }}
+      className={
+        compact
+          ? "relative flex max-h-[85vh] flex-col justify-center overflow-y-auto px-0 py-0"
+          : "relative flex h-full flex-col justify-center overflow-y-auto px-4 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-12"
+      }
+      initial={{ opacity: 0, x: compact ? 0 : 60, y: compact ? 24 : 0 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, x: compact ? 0 : 40, y: compact ? 16 : 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Panel glass card */}
       <div
-        className="relative rounded-[32px] p-10 flex flex-col gap-7"
+        className={
+          compact
+            ? "relative flex w-full flex-col gap-5 rounded-[28px] p-5 sm:p-8"
+            : "relative flex flex-col gap-7 rounded-[32px] p-6 sm:p-8 lg:p-10"
+        }
         style={{
           background:
             "linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.025) 100%)",
@@ -549,17 +565,15 @@ function DetailPanel({
             "0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.12)",
         }}
       >
-        {/* Reflection */}
         <div
           aria-hidden
-          className="absolute top-0 left-0 right-0 h-24 rounded-t-[32px] pointer-events-none"
+          className="pointer-events-none absolute left-0 right-0 top-0 h-24 rounded-t-[32px]"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%)",
           }}
         />
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -567,27 +581,26 @@ function DetailPanel({
           className="flex flex-col gap-3"
         >
           <div className="flex items-center gap-3">
-            <span className="text-5xl">{emotion.icon}</span>
+            <span className="text-4xl sm:text-5xl">{emotion.icon}</span>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.28em] text-sky-300/60 font-medium mb-1">
+              <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.28em] text-sky-300/60">
                 Exploring
               </p>
               <h3
-                className="text-4xl font-bold tracking-tight text-white"
+                className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
                 style={{ fontFamily: "'Georgia', serif" }}
               >
                 {emotion.name}
               </h3>
             </div>
           </div>
-          <p className="text-[12px] uppercase tracking-widest text-white/35 font-medium border-t border-white/8 pt-3">
+          <p className="border-t border-white/8 pt-3 text-[12px] font-medium uppercase tracking-widest text-white/35">
             {emotion.subtitle}
           </p>
         </motion.div>
 
-        {/* Description */}
         <motion.p
-          className="text-white/65 leading-relaxed text-[15px]"
+          className="text-[14px] leading-relaxed text-white/65 sm:text-[15px]"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -595,57 +608,55 @@ function DetailPanel({
           {emotion.desc}
         </motion.p>
 
-        {/* Suggestions */}
         <motion.div
           className="flex flex-col gap-3"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="text-[11px] uppercase tracking-[0.24em] text-white/30 font-medium">
+          <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/30">
             Therapy approaches
           </p>
           <div className="flex flex-wrap gap-2">
-            {emotion.suggestions.map((s, i) => (
+            {emotion.suggestions.map((suggestion, index) => (
               <motion.span
-                key={s}
-                className="px-4 py-1.5 rounded-full text-[12px] font-medium text-white/60"
+                key={suggestion}
+                className="rounded-full px-4 py-1.5 text-[12px] font-medium text-white/60"
                 style={{
                   background: "rgba(127,184,200,0.1)",
                   border: "1px solid rgba(127,184,200,0.2)",
                 }}
                 initial={{ opacity: 0, scale: 0.88 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 + i * 0.07, duration: 0.4 }}
+                transition={{ delay: 0.4 + index * 0.07, duration: 0.4 }}
               >
-                {s}
+                {suggestion}
               </motion.span>
             ))}
           </div>
         </motion.div>
 
-        {/* CTA */}
         <motion.div
-          className="flex gap-3 pt-2"
+          className="flex flex-col gap-3 pt-2 sm:flex-row"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <a
             href="#begin"
-            className="flex-1 rounded-full py-3.5 text-[13px] font-semibold text-center transition-all duration-200"
+            className="flex-1 rounded-full py-3.5 text-center text-[13px] font-semibold transition-all duration-200"
             style={{
               background:
                 "linear-gradient(135deg, rgba(127,184,200,0.9), rgba(93,152,166,0.9))",
               color: "#080C14",
               boxShadow: "0 8px 24px rgba(127,184,200,0.3)",
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.boxShadow =
+            onMouseEnter={(event) =>
+              (event.currentTarget.style.boxShadow =
                 "0 12px 32px rgba(127,184,200,0.5)")
             }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.boxShadow =
+            onMouseLeave={(event) =>
+              (event.currentTarget.style.boxShadow =
                 "0 8px 24px rgba(127,184,200,0.3)")
             }
           >
@@ -654,7 +665,7 @@ function DetailPanel({
           <button
             onClick={onClose}
             aria-label="Close panel"
-            className="px-5 py-3.5 rounded-full text-[13px] font-medium text-white/50 transition-all duration-200 hover:text-white/80"
+            className="rounded-full px-5 py-3.5 text-[13px] font-medium text-white/50 transition-all duration-200 hover:text-white/80"
             style={{
               background: "rgba(255,255,255,0.05)",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -674,20 +685,25 @@ export function EmotionsGalaxy() {
   const [selected, setSelected] = useState<Emotion | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [isCompact, setIsCompact] = useState(false);
   const rafRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number | undefined>(undefined);
   const pausedRef = useRef(false);
 
-  // Smooth CSS-driven rotation via RAF
   useEffect(() => {
-    const SPEED = 0.018; // degrees per ms
+    const updateViewport = () => setIsCompact(window.innerWidth < 1024);
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    const SPEED = 0.018;
 
     const tick = (time: number) => {
-      if (lastTimeRef.current !== undefined) {
-        if (!pausedRef.current) {
-          const delta = time - lastTimeRef.current;
-          setRotation((r) => r + SPEED * delta);
-        }
+      if (lastTimeRef.current !== undefined && !pausedRef.current) {
+        const delta = time - lastTimeRef.current;
+        setRotation((currentRotation) => currentRotation + SPEED * delta);
       }
       lastTimeRef.current = time;
       rafRef.current = requestAnimationFrame(tick);
@@ -704,7 +720,9 @@ export function EmotionsGalaxy() {
   }, [isPaused]);
 
   const handleCardClick = (emotion: Emotion) => {
-    setSelected((prev) => (prev?.name === emotion.name ? null : emotion));
+    setSelected((previous) =>
+      previous?.name === emotion.name ? null : emotion,
+    );
     setIsPaused(true);
   };
 
@@ -718,10 +736,14 @@ export function EmotionsGalaxy() {
   return (
     <section
       id="emotions"
-      className="relative overflow-hidden py-24 md:py-32"
-      style={{ background: "#415989", minHeight: "80vh", marginTop: "-10rem" }}
+      className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:py-32"
+      style={{
+        background:
+          "linear-gradient(135deg, #9eb8bf 0%, #b8d4cb 45%, #dce6da 100%)",
+        minHeight: "80vh",
+        marginTop: "-6rem",
+      }}
     >
-      {/* Background gradient */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -731,32 +753,31 @@ export function EmotionsGalaxy() {
         }}
       />
 
-      {/* Section header */}
       <AnimatePresence>
         {!isExpanded && (
           <motion.div
-            className="mx-auto mb-16 max-w-3xl px-6 text-center"
+            className="mx-auto mb-10 max-w-3xl px-2 text-center sm:mb-14 sm:px-6"
             initial={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ marginTop: "-7rem" }}
+            style={{ marginTop: "-2rem" }}
           >
             <p
-              className="mb-4 text-[10px] uppercase tracking-[0.38em] font-semibold"
-              style={{ color: "rgba(127,184,200,0.7)" }}
+              className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em]"
+              style={{ color: "rgba(255, 179, 0, 0.7)" }}
             >
               A galaxy of emotions
             </p>
             <h2
-              className="text-balance text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]"
+              className="text-balance text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl"
               style={{ fontFamily: "'Georgia', serif" }}
             >
               Every feeling has a{" "}
-              <span style={{ color: "rgba(127,184,200,0.85)" }}>
+              <span style={{ color: "rgba(255, 179, 0, 0.85)" }}>
                 place to land.
               </span>
             </h2>
-            <p className="mx-auto mt-5 max-w-lg text-[15px] leading-relaxed text-white/40">
+            <p className="mx-auto mt-5 max-w-lg text-[14px] leading-relaxed text-white/40 sm:text-[15px]">
               Move close to what feels true today. Each world holds a way back
               to yourself.
             </p>
@@ -764,52 +785,49 @@ export function EmotionsGalaxy() {
         )}
       </AnimatePresence>
 
-      {/* Main interactive area */}
       <motion.div
-        className="relative mx-auto px-6 flex items-center"
+        className="relative mx-auto flex w-full flex-col items-center gap-8 px-0 sm:px-2 lg:flex-row lg:items-center lg:gap-10"
         layout
         animate={{
-          maxWidth: isExpanded ? "1200px" : "820px",
-          flexDirection: "row",
-          marginTop: isExpanded ? "0" : "-8rem",
+          maxWidth: isExpanded ? (isCompact ? "920px" : "1200px") : "860px",
+          marginTop: isExpanded ? "0" : isCompact ? "-1rem" : "-4rem",
         }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         style={{ minHeight: 580 }}
       >
-        {/* LEFT: carousel */}
         <motion.div
-          className="relative flex items-center justify-center flex-shrink-0"
+          className="relative flex w-full items-center justify-center lg:flex-shrink-0"
           layout
           animate={{
-            flex: isExpanded ? "0 0 60%" : "1 1 100%",
+            flex: isExpanded
+              ? isCompact
+                ? "0 0 100%"
+                : "0 0 60%"
+              : "1 1 100%",
           }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          style={{ height: 580 }}
+          style={{ minHeight: isCompact ? 420 : 580 }}
           onMouseEnter={() => !selected && setIsPaused(true)}
           onMouseLeave={() => !selected && setIsPaused(false)}
         >
-          {/* 3D perspective wrapper */}
           <div
-            className="relative w-full h-full flex items-center justify-center"
+            className="relative flex h-full w-full items-center justify-center"
             style={{ perspective: "900px", perspectiveOrigin: "50% 50%" }}
           >
             <div
               className="relative flex items-center justify-center"
               style={{ width: 260, height: 260, transformStyle: "preserve-3d" }}
             >
-              {/* Brain */}
               <BrainCenter expanded={isExpanded} />
 
-              {/* Cards in orbit */}
-              {emotions.map((emotion, i) => (
+              {emotions.map((emotion, index) => (
                 <EmotionCard
                   key={emotion.name}
                   emotion={emotion}
-                  index={i}
+                  index={index}
                   total={emotions.length}
                   rotationAngle={rotation}
                   isSelected={selected?.name === emotion.name}
-                  isPaused={isPaused}
                   onClick={() => handleCardClick(emotion)}
                 />
               ))}
@@ -817,12 +835,11 @@ export function EmotionsGalaxy() {
           </div>
         </motion.div>
 
-        {/* RIGHT: detail panel */}
         <AnimatePresence>
-          {isExpanded && selected && (
+          {isExpanded && selected && !isCompact && (
             <motion.div
-              className="flex-shrink-0"
-              style={{ flex: "0 0 40%", height: 580 }}
+              className="w-full lg:flex-shrink-0"
+              style={{ flex: "0 0 40%" }}
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -834,11 +851,33 @@ export function EmotionsGalaxy() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Hint text */}
+      <AnimatePresence>
+        {isExpanded && selected && isCompact && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-end bg-black/35 px-3 pb-3 pt-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleClose}
+          >
+            <motion.div
+              className="w-full max-w-xl overflow-hidden rounded-[32px]"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <DetailPanel emotion={selected} onClose={handleClose} compact />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {!isExpanded && (
           <motion.p
-            className="text-center text-[11px] uppercase tracking-[0.28em] mt-10"
+            className="mt-8 text-center text-[10px] uppercase tracking-[0.28em] sm:mt-10"
             style={{ color: "rgba(255,255,255,0.2)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -849,19 +888,6 @@ export function EmotionsGalaxy() {
           </motion.p>
         )}
       </AnimatePresence>
-
-      {/* Global keyframes */}
-      <style jsx>{`
-        @keyframes drift {
-          0%,
-          100% {
-            transform: rotate(0deg) scaleX(1);
-          }
-          50% {
-            transform: rotate(180deg) scaleX(0.97);
-          }
-        }
-      `}</style>
     </section>
   );
 }
@@ -1052,7 +1078,7 @@ export function MindscapeCanvas() {
       style={{
         background:
           "linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.04) 50%,transparent 100%)",
-        marginTop: "-10rem",
+        marginTop: "-2rem",
       }}
     >
       <div className="max-w-6xl mx-auto px-6 md:px-10 mb-10">
@@ -1240,9 +1266,87 @@ export function EditorialShowcase() {
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
   }, [isPaused, loopAt]);
+  const updateTrack = () => {
+    if (!trackRef.current) return;
+
+    trackRef.current.style.transform = `translateX(${-posRef.current}px)`;
+  };
+
+  const scrollNext = () => {
+    posRef.current += CARD_W;
+
+    if (posRef.current >= loopAt) {
+      posRef.current -= loopAt;
+    }
+
+    updateTrack();
+  };
+
+  const scrollPrev = () => {
+    posRef.current -= CARD_W;
+
+    if (posRef.current < 0) {
+      posRef.current += loopAt;
+    }
+
+    updateTrack();
+  };
+
   return (
     <>
-      <style>{`.esc-track{display:flex;gap:24px;padding:0 48px;will-change:transform;width:max-content}.esc-card{flex:0 0 420px;height:560px;border-radius:28px;overflow:hidden;position:relative;display:block;text-decoration:none;transition:transform .5s cubic-bezier(.16,1,.3,1)}.esc-card:hover{transform:translateY(-8px) scale(1.01)}.esc-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}.esc-card:hover img{transform:scale(1.06)}.esc-overlay{position:absolute;inset:0}.esc-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:32px 28px}.esc-num{position:absolute;top:24px;right:24px;font-size:3.5rem;font-weight:300;font-family:'Cormorant Garamond',serif;opacity:.2;color:#fff;line-height:1}.esc-tag{display:inline-block;padding:5px 14px;border-radius:999px;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:12px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);color:#fff;width:fit-content}.esc-headline{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:400;line-height:1.2;color:#fff;margin-bottom:10px}.esc-sub{font-size:.7rem;letter-spacing:.06em;color:rgba(255,255,255,.6)}@media(max-width:768px){.esc-card{flex:0 0 300px;height:400px}}`}</style>
+      <style>
+        {`.esc-track{display:flex;gap:24px;padding:0 48px;will-change:transform;width:max-content}.esc-card{flex:0 0 420px;height:560px;border-radius:28px;overflow:hidden;position:relative;display:block;text-decoration:none;transition:transform .5s cubic-bezier(.16,1,.3,1)}.esc-card:hover{transform:translateY(-8px) scale(1.01)}.esc-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}.esc-card:hover img{transform:scale(1.06)}.esc-overlay{position:absolute;inset:0}.esc-body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:32px 28px}.esc-num{position:absolute;top:24px;right:24px;font-size:3.5rem;font-weight:300;font-family:'Cormorant Garamond',serif;opacity:.2;color:#fff;line-height:1}.esc-tag{display:inline-block;padding:5px 14px;border-radius:999px;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:12px;background:rgba(255,255,255,.18);
+      backdrop-filter:blur(8px);
+      color:#fff;width:fit-content}.esc-headline{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:400;line-height:1.2;color:#fff;margin-bottom:10px}.esc-sub{font-size:.7rem;letter-spacing:.06em;color:rgba(255,255,255,.6)}@media(max-width:768px){.esc-card{flex:0 0 300px;height:400px}}
+      .esc-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:52px;
+  height:52px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:50;
+  transition:.3s;
+  color:#fff;
+}
+
+.esc-nav:hover{
+  background:rgba(255,255,255,.22);
+  transform:translateY(-50%) scale(1.08);
+}
+
+.esc-prev{
+  left:20px;
+}
+
+.esc-next{
+  right:20px;
+}
+
+@media(max-width:768px){
+  .esc-nav{
+    width:42px;
+    height:42px;
+  }
+
+  .esc-prev{
+    left:10px;
+  }
+
+  .esc-next{
+    right:10px;
+  }
+}`}
+      </style>
+
       <div className="py-32 md:py-40 overflow-hidden">
         <div className="px-8 md:px-16 mb-12">
           <div className="flex items-end justify-between">
@@ -1260,56 +1364,89 @@ export function EditorialShowcase() {
           </div>
         </div>
         <div
-          className="overflow-hidden"
+          className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="esc-track" ref={trackRef}>
-            {allCards.map((card, idx) => (
-              <Link
-                key={`${card.slug}-${idx}`}
-                href={`/services/${card.slug}`}
-                className="esc-card"
-              >
-                <Image
-                  src={card.img}
-                  alt={card.cat}
-                  loading="lazy"
-                  width={600}
-                  height={400}
-                />
-                <div
-                  className="esc-overlay"
-                  style={{
-                    background: `linear-gradient(180deg,transparent 20%,${card.color}aa 70%,${card.color}ee 100%)`,
-                  }}
-                />
-                <div className="esc-body">
-                  <span className="esc-num">{card.num}</span>
-                  <span className="esc-tag">{card.cat}</span>
-                  <p className="esc-headline">{card.headline}</p>
-                  <p className="esc-sub">{card.sub}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="px-8 md:px-16 mt-10 flex justify-end">
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 text-sm border-b border-foreground/25 pb-0.5 hover:border-foreground transition-colors"
+          <button
+            className="esc-nav esc-prev"
+            onClick={scrollPrev}
+            aria-label="Previous"
           >
-            Browse all 40+ services
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path
-                d="M5 12H19M19 12L12 5M19 12L12 19"
+                d="M15 18L9 12L15 6"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
-          </Link>
+          </button>
+
+          <div className="overflow-hidden">
+            <div className="esc-track" ref={trackRef}>
+              {allCards.map((card, idx) => (
+                <Link
+                  key={`${card.slug}-${idx}`}
+                  href={`/services/${card.slug}`}
+                  className="esc-card"
+                >
+                  <Image
+                    src={card.img}
+                    alt={card.cat}
+                    loading="lazy"
+                    width={600}
+                    height={400}
+                  />
+                  <div
+                    className="esc-overlay"
+                    style={{
+                      background: `linear-gradient(180deg,transparent 20%,${card.color}aa 70%,${card.color}ee 100%)`,
+                    }}
+                  />
+                  <div className="esc-body">
+                    <span className="esc-num">{card.num}</span>
+                    <span className="esc-tag">{card.cat}</span>
+                    <p className="esc-headline">{card.headline}</p>
+                    <p className="esc-sub">{card.sub}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="px-8 md:px-16 mt-10 flex justify-end">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 text-sm border-b border-foreground/25 pb-0.5 hover:border-foreground transition-colors"
+            >
+              Browse all 40+ services
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12H19M19 12L12 5M19 12L12 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
+          <button
+            className="esc-nav esc-next"
+            onClick={scrollNext}
+            aria-label="Next"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </>
@@ -1341,15 +1478,16 @@ export function PhilosophyStrip() {
         </div>
         <div className="md:col-span-7 reveal-blur" data-delay="200">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
-            Why ocean, why slow
+            A calm mind sees possibilities where stress sees obstacles
           </p>
           <h2 className="font-display text-4xl md:text-6xl tracking-tight text-balance leading-[1.05]">
-            The mind quiets where the water meets the sky.
+            Welcome to a safe and supportive space for healing, growth, and
+            self-discovery.
           </h2>
           <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-            Color psychology calls deep blues and seafoam tones the most
-            calming. We borrow their rhythm — slow tides, soft horizons — and
-            design every session, every page, around the same feeling.
+            Every person’s journey is unique, and our services are designed to
+            support you with empathy, confidentiality, and care—guiding you
+            toward clarity, resilience, and lasting well-being.
           </p>
           <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
             {[
@@ -1419,7 +1557,7 @@ export function BreathStats() {
       color: "#C05478",
     },
     {
-      end: 8,
+      end: 15,
       suffix: "yrs",
       label: "Of supporting people through hard times",
       color: "#2E917A",
